@@ -6,6 +6,8 @@ import heapq
 class State:
     """
     creating a class to represent the state our agent is currently at
+    
+    chatgpt used for help with frozenset, eq, and hashing. needed for adding states to priority queue
     """
     def __init__(self, pos, cur_keys, doors_opened, keys_collected):
         self.pos = pos
@@ -99,6 +101,7 @@ def pathfinding(filepath):
         states_explored += 1
 
         # checking if we reached the goal
+         # used chatgpt for help on backtracking our optimal path here
         if current_state.pos == goal:
             # reconstructing our optimal path
             optimal_path = []
@@ -125,7 +128,7 @@ def pathfinding(filepath):
             if 0 <= new_row < m and 0 <= new_col < n:
                 cell = df.iloc[new_row, new_col]
                 new_pos = (new_row, new_col)
-                # initializing class variables
+                # initializing class variables for new state
                 new_keys_in_possession = current_state.cur_keys
                 new_doors_opened = set(current_state.doors_opened)
                 new_keys_collected = set(current_state.keys_collected)
@@ -133,6 +136,7 @@ def pathfinding(filepath):
                 can_move = False
 
                 # determining if we can move to neighboring cell based off what their type is
+                  # used chatgpt for missing logic regarding keys collected and doors opened
                 if cell in ("O", "S", "G"):
                     can_move = True
                 elif cell == "K":
@@ -181,6 +185,3 @@ def pathfinding(filepath):
                         counter += 1
     # edge case where not possible to reach goal
     return [], -1, states_explored
- 
-path, cost, states = pathfinding("data/E0/grid.csv")
-print("\t path: ", path, " \n \t cost: ", cost, "\n \t states: ", states)
